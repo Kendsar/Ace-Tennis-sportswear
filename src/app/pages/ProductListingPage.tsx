@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Filter, Grid2X2, List } from 'lucide-react';
 import { ProductCard } from '../components/ProductCard';
 import { ProductQuickAdd } from '../components/ProductQuickAdd';
 import { Product } from '../context/CartContext';
-import { getProductsByCategory } from '../data/products';
+import { productsAPI } from '../services/api';
+import { toast } from 'sonner';
 
 interface ProductListingPageProps {
   category: 'men' | 'women';
@@ -14,12 +15,49 @@ export function ProductListingPage({ category, title }: ProductListingPageProps)
   const [gridView, setGridView] = useState<'2col' | '1col'>('2col');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [quickAddOpen, setQuickAddOpen] = useState(false);
-  const products = getProductsByCategory(category);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadProducts();
+  }, [category]);
+
+  async function loadProducts() {
+    try {
+      setLoading(true);
+      const response = await productsAPI.getByCategory(category);
+      // Map database products to Product interface
+      const mappedProducts = response.products.map((p: any) => ({
+        id: p.id,
+        name: p.name,
+        price: parseFloat(p.price),
+        image: p.image,
+        category: p.category,
+        colors: p.colors || [],
+        sizes: p.sizes || [],
+      }));
+      setProducts(mappedProducts);
+    } catch (error) {
+      console.error('Error loading products:', error);
+      toast.error('Failed to load products');
+      setProducts([]);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   const handleQuickAdd = (product: Product) => {
     setSelectedProduct(product);
     setQuickAddOpen(true);
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <p className="text-gray-500 uppercase tracking-wide">Loading products...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -51,21 +89,27 @@ export function ProductListingPage({ category, title }: ProductListingPageProps)
 
       {/* Product Grid */}
       <div className="px-4 md:px-8 py-8 md:py-12">
-        <div
-          className={`grid gap-6 md:gap-8 ${
-            gridView === '2col'
-              ? 'grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
-              : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
-          }`}
-        >
-          {products.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              onQuickAdd={handleQuickAdd}
-            />
-          ))}
-        </div>
+        {products.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-gray-500 uppercase tracking-wide">No products available</p>
+          </div>
+        ) : (
+          <div
+            className={`grid gap-6 md:gap-8 ${
+              gridView === '2col'
+                ? 'grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
+                : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
+            }`}
+          >
+            {products.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onQuickAdd={handleQuickAdd}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Product Count */}

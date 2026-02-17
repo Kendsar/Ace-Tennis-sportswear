@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Menu, Search, User, ShoppingBag, X } from 'lucide-react';
-import { Link, useLocation } from 'react-router';
+import { Menu, Search, User, ShoppingBag, X, LogOut } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router';
+import { useAuth } from '../context/AuthContext';
+import { CartDrawer } from './CartDrawer';
+import { toast } from 'sonner';
 
 interface DrawerMenuProps {
   isOpen: boolean;
@@ -184,11 +187,17 @@ interface HeaderProps {
 export function Header({ cartCount }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, signOut, isAdmin } = useAuth();
 
   // Close menu on route change
   useEffect(() => {
     setIsMenuOpen(false);
+    setShowUserMenu(false);
+    setIsCartOpen(false);
   }, [location]);
 
   // Track scroll position
@@ -200,6 +209,17 @@ export function Header({ cartCount }: HeaderProps) {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      toast.success('Logged out successfully');
+      setShowUserMenu(false);
+      navigate('/');
+    } catch (error) {
+      toast.error('Failed to log out');
+    }
+  };
 
   return (
     <>
@@ -247,13 +267,72 @@ export function Header({ cartCount }: HeaderProps) {
 
           {/* Right: User + Cart */}
           <div className="flex items-center gap-3 md:gap-4">
+            <div className="relative">
+              <button
+                onClick={() => setShowUserMenu(!showUserMenu)}
+                className="hover:opacity-60 transition-opacity"
+                aria-label="Account"
+              >
+                <User className="w-5 h-5" strokeWidth={1.5} />
+              </button>
+
+              {showUserMenu && (
+                <div className="absolute right-0 top-10 bg-white border border-gray-200 shadow-lg rounded-md w-48 py-2 z-50">
+                  {user ? (
+                    <>
+                      <div className="px-4 py-2 border-b border-gray-100">
+                        <p className="text-xs text-gray-500 uppercase tracking-wide">
+                          {user.email}
+                        </p>
+                      </div>
+                      {isAdmin && (
+                        <Link
+                          to="/admin"
+                          onClick={() => setShowUserMenu(false)}
+                          className="block px-4 py-2 text-sm hover:bg-gray-50 uppercase tracking-wide"
+                        >
+                          Admin Dashboard
+                        </Link>
+                      )}
+                      <Link
+                        to="/orders"
+                        onClick={() => setShowUserMenu(false)}
+                        className="block px-4 py-2 text-sm hover:bg-gray-50 uppercase tracking-wide"
+                      >
+                        My Orders
+                      </Link>
+                      <button
+                        onClick={handleLogout}
+                        className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 uppercase tracking-wide flex items-center gap-2"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        Logout
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <Link
+                        to="/login"
+                        onClick={() => setShowUserMenu(false)}
+                        className="block px-4 py-2 text-sm hover:bg-gray-50 uppercase tracking-wide"
+                      >
+                        Sign In
+                      </Link>
+                      <Link
+                        to="/signup"
+                        onClick={() => setShowUserMenu(false)}
+                        className="block px-4 py-2 text-sm hover:bg-gray-50 uppercase tracking-wide"
+                      >
+                        Sign Up
+                      </Link>
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
+
             <button
-              className="hover:opacity-60 transition-opacity"
-              aria-label="Account"
-            >
-              <User className="w-5 h-5" strokeWidth={1.5} />
-            </button>
-            <button
+              onClick={() => setIsCartOpen(true)}
               className="relative hover:opacity-60 transition-opacity"
               aria-label="Shopping cart"
             >
@@ -270,6 +349,9 @@ export function Header({ cartCount }: HeaderProps) {
 
       {/* Drawer Menu */}
       <DrawerMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+      
+      {/* Cart Drawer */}
+      <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </>
   );
 }
