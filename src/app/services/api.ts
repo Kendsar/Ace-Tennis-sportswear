@@ -5,29 +5,6 @@ const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
-// Base API URL (for your custom backend routes only)
-
-
-// Helper to get headers for your custom backend routes
-async function getAuthHeaders(useAuth: boolean = true): Promise<HeadersInit> {
-  const headers: HeadersInit = {
-    'Content-Type': 'application/json',
-  };
-
-  if (useAuth) {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (session?.access_token) {
-      headers['Authorization'] = `Bearer ${session.access_token}`;
-    } else {
-      headers['Authorization'] = `Bearer ${supabaseAnonKey}`;
-    }
-  } else {
-    headers['Authorization'] = `Bearer ${supabaseAnonKey}`;
-  }
-
-  return headers;
-}
-
 
 // ============================================
 // AUTHENTICATION API (uses Supabase directly)
@@ -76,7 +53,22 @@ export const authAPI = {
   },
 
   verifyAdmin: async () => {
-    return apiRequest('/auth/verify-admin', { method: 'GET' });
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser()
+
+    if (userError || !user) return false
+
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", user.id)
+      .single()
+
+    if (error) throw error
+
+    return data.role === "admin"
   },
 
   // Sign out user
