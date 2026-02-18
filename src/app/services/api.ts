@@ -6,7 +6,6 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 // Base API URL (for your custom backend routes only)
-const API_BASE_URL = `${supabaseUrl}/functions/v1/make-server-5eb44c6f`;
 
 
 // Helper to get headers for your custom backend routes
@@ -29,35 +28,6 @@ async function getAuthHeaders(useAuth: boolean = true): Promise<HeadersInit> {
   return headers;
 }
 
-// Generic API request handler (for your custom backend)
-async function apiRequest<T>(
-  endpoint: string,
-  options: RequestInit = {},
-  useAuth: boolean = true
-): Promise<T> {
-  try {
-    const headers = await getAuthHeaders(useAuth);
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-      ...options,
-      headers: {
-        ...headers,
-        ...options.headers,
-      },
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      console.error(`API Error on ${endpoint}:`, data);
-      throw new Error(data.error || `HTTP error! status: ${response.status}`);
-    }
-
-    return data;
-  } catch (error) {
-    console.error(`Request failed for ${endpoint}:`, error);
-    throw error;
-  }
-}
 
 // ============================================
 // AUTHENTICATION API (uses Supabase directly)
@@ -157,26 +127,159 @@ export const authAPI = {
 // ============================================
 
 export const productsAPI = {
-  getAll: async () => apiRequest('/products', { method: 'GET' }, false),
-  getByCategory: async (category: 'women' | 'men') =>
-    apiRequest(`/products/category/${category}`, { method: 'GET' }, false),
-  getById: async (id: string) => apiRequest(`/products/${id}`, { method: 'GET' }, false),
-  create: async (productData: any) =>
-    apiRequest('/products', { method: 'POST', body: JSON.stringify(productData) }),
-  update: async (id: string, productData: any) =>
-    apiRequest(`/products/${id}`, { method: 'PUT', body: JSON.stringify(productData) }),
-  delete: async (id: string) => apiRequest(`/products/${id}`, { method: 'DELETE' }),
+  // Get all products
+  getAll: async () => {
+    const { data, error } = await supabase
+      .from("products")
+      .select("*");
+
+    if (error) throw error;
+    return data;
+  },
+
+  // Get products by category
+  getByCategory: async (category: "women" | "men") => {
+    const { data, error } = await supabase
+      .from("products")
+      .select("*")
+      .eq("category", category);
+
+    if (error) throw error;
+    return data;
+  },
+
+  // Get product by ID
+  getById: async (id: string) => {
+    const { data, error } = await supabase
+      .from("products")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    if (error) throw error;
+    return data;
+  },
+
+  // Create product
+  create: async (productData: any) => {
+    const { data, error } = await supabase
+      .from("products")
+      .insert([productData])
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data;
+  },
+
+  // Update product
+  update: async (id: string, productData: any) => {
+    const { data, error } = await supabase
+      .from("products")
+      .update(productData)
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data;
+  },
+
+  // Delete product
+  delete: async (id: string) => {
+    const { error } = await supabase
+      .from("products")
+      .delete()
+      .eq("id", id);
+
+    if (error) throw error;
+    return true;
+  },
 };
 
+
 export const ordersAPI = {
-  create: async (items: any[], totalAmount: number, shippingAddress?: any) =>
-    apiRequest('/orders', { method: 'POST', body: JSON.stringify({ items, totalAmount, shippingAddress }) }),
-  getUserOrders: async () => apiRequest('/orders', { method: 'GET' }),
-  getById: async (id: string) => apiRequest(`/orders/${id}`, { method: 'GET' }),
-  updateStatus: async (id: string, status: string) =>
-    apiRequest(`/orders/${id}/status`, { method: 'PUT', body: JSON.stringify({ status }) }),
-  getAllOrders: async () => apiRequest('/admin/orders', { method: 'GET' }),
+  // Create order
+  create: async (items: any[], totalAmount: number, shippingAddress?: any) => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) throw new Error("Not authenticated");
+
+    const { data, error } = await supabase
+      .from("orders")
+      .insert([
+        {
+          user_id: user.id,
+          items,
+          total_amount: totalAmount,
+          shipping_address: shippingAddress,
+          status: "pending",
+        },
+      ])
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data;
+  },
+
+  // Get current user orders
+  getUserOrders: async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) throw new Error("Not authenticated");
+
+    const { data, error } = await supabase
+      .from("orders")
+      .select("*")
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+    return data;
+  },
+
+  // Get order by ID
+  getById: async (id: string) => {
+    const { data, error } = await supabase
+      .from("orders")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    if (error) throw error;
+    return data;
+  },
+
+  // Update order status (admin only)
+  updateStatus: async (id: string, status: string) => {
+    const { data, error } = await supabase
+      .from("orders")
+      .update({ status })
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data;
+  },
+
+  // Admin: get all orders
+  getAllOrders: async () => {
+    const { data, error } = await supabase
+      .from("orders")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+    return data;
+  },
 };
+
 
 // Export all APIs
 export const api = {
