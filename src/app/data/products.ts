@@ -31,7 +31,7 @@ export const products: Product[] = [
   },
   {
     id: 'w4',
-    name: 'ALPHA SPORTS BRA',
+    name: 'ACE SPORTS BRA',
     price: 39.000,
     image: 'https://images.unsplash.com/photo-1684225358843-54b1132537b6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
     category: 'women',
@@ -87,7 +87,7 @@ export const products: Product[] = [
   },
   {
     id: 'm4',
-    name: 'ALPHA TENNIS PANTS',
+    name: 'ACE TENNIS PANTS',
     price: 79.000,
     image: 'https://images.unsplash.com/photo-1627064446636-88e70a81c745?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
     category: 'men',

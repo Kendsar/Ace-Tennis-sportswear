@@ -226,7 +226,7 @@ export function Header({ cartCount }: HeaderProps) {
       {/* Announcement Bar */}
       <div className="bg-[#3a3d3a] text-white py-2.5 px-4 text-center">
         <p className="text-[10px] md:text-xs tracking-[0.2em] uppercase">
-          MOVE WITH POWER · ALPHA SPORTS FALL | WINTER IS HERE
+          MOVE WITH POWER · ACE SPORTS FALL | WINTER IS HERE
         </p>
       </div>
 
@@ -261,7 +261,7 @@ export function Header({ cartCount }: HeaderProps) {
               style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }}
             />
             <span className="text-[10px] tracking-[0.2em] mt-1 group-hover:opacity-60 transition-opacity">
-              ALPHA SPORT
+              ACE SPORT
             </span>
           </Link>
 

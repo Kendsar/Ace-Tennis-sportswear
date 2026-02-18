@@ -90,7 +90,7 @@ export function Footer() {
 
         {/* Bottom */}
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-400">
-          <p>&copy; 2026 Alpha Sport. All rights reserved.</p>
+          <p>&copy; 2026 ACE Sport. All rights reserved.</p>
           <div className="flex gap-6">
             <a href="#" className="hover:text-white transition-colors">
               Privacy Policy
