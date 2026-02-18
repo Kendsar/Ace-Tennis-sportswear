@@ -17,17 +17,29 @@ export const authAPI = {
       email,
       password,
       options: {
-        data: { fullName } // metadata
+        data: { fullName }
       }
     });
-
-    if (data.user?.email) {
-      alert('Check your email to confirm your account before signing in!');
-    }
 
     if (error) {
       console.error('Sign-up error:', error);
       throw error;
+    }
+
+    // Create user profile in user_profiles table
+    if (data.user) {
+      const { error: profileError } = await supabase
+        .from('user_profiles')
+        .insert({
+          id: data.user.id,
+          email: email,
+          full_name: fullName || null,
+          role: 'customer',
+        });
+
+      if (profileError) {
+        console.error('Profile creation error:', profileError);
+      }
     }
 
     return data;
@@ -52,23 +64,25 @@ export const authAPI = {
     };
   },
 
+  // Verify if user is admin
   verifyAdmin: async () => {
-    const {
-      data: { user },
-      error: userError,
-    } = await supabase.auth.getUser()
+    const { data: { user } } = await supabase.auth.getUser();
 
-    if (userError || !user) return false
+    if (!user) {
+      return { success: false, isAdmin: false };
+    }
 
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("role")
-      .eq("id", user.id)
-      .single()
+    const { data: profile, error } = await supabase
+      .from('user_profiles')
+      .select('role')
+      .eq('id', user.id)
+      .maybeSingle();
 
-    if (error) throw error
+    if (error || !profile) {
+      return { success: false, isAdmin: false };
+    }
 
-    return data.role === "admin"
+    return { success: true, isAdmin: profile.role === 'admin' };
   },
 
   // Sign out user
@@ -91,13 +105,12 @@ export const authAPI = {
     return session;
   },
 
-  // Get current user profile (you can store extra info in metadata or in a separate table)
+  // Get current user profile
   getUserProfile: async () => {
     const { data: { user }, error } = await supabase.auth.getUser();
     if (error) throw error;
     return user;
   },
-
 
   // Update user profile metadata
   updateUserProfile: async (fullName: string) => {
@@ -115,8 +128,22 @@ export const authAPI = {
 };
 
 // ============================================
-// PRODUCTS & ORDERS API (keep your apiRequest wrapper)
+// PRODUCTS API (uses Supabase directly)
 // ============================================
+
+export interface Product {
+  id: string;
+  name: string;
+  price: number;
+  image: string;
+  category: 'women' | 'men';
+  colors: string[];
+  sizes: string[];
+  description?: string;
+  in_stock: boolean;
+  created_at?: string;
+  updated_at?: string;
+}
 
 export const productsAPI = {
   // Get all products
