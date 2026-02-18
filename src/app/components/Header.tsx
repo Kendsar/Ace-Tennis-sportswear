@@ -256,10 +256,6 @@ export function Header({ cartCount }: HeaderProps) {
 
           {/* Center: Logo */}
           <Link to="/" className="flex flex-col items-center group">
-            <div
-              className="w-6 h-6 border-2 border-black group-hover:opacity-60 transition-opacity"
-              style={{ clipPath: 'polygon(50% 0%, 0% 100%, 100% 100%)' }}
-            />
             <span className="text-[10px] tracking-[0.2em] mt-1 group-hover:opacity-60 transition-opacity">
               ACE SPORT
             </span>

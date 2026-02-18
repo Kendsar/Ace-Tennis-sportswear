@@ -14,16 +14,16 @@ export function HomePage() {
         {/* Hero Text Overlay */}
         <div className="absolute inset-0 flex flex-col justify-center px-6 md:px-12 lg:px-20">
           <div className="max-w-7xl">
-            <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-bold tracking-tighter leading-[0.9] mb-2 text-white">
+            <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-bold tracking-tighter leading-[0.9] mb-2 text-black">
               SALES
             </h1>
-            <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-bold tracking-tighter leading-[0.9] mb-2 text-white">
+            <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-bold tracking-tighter leading-[0.9] mb-2 text-black">
               SALES
             </h1>
-            <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-bold tracking-tighter leading-[0.9] mb-8 text-white">
+            <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-bold tracking-tighter leading-[0.9] mb-8 text-black">
               SALES
             </h1>
-            <p className="text-xs md:text-sm tracking-[0.3em] uppercase text-white">
+            <p className="text-xs md:text-sm tracking-[0.3em] uppercase text-black">
               IN STORE AND ONLINE
             </p>
           </div>
