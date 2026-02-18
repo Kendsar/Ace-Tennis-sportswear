@@ -14,7 +14,7 @@ app.use('*', logger(console.log));
 
 // Middleware for CORS
 app.use('*', async (c, next) => {
-  c.header('Access-Control-Allow-Origin', 'http://localhost:5173'); // your frontend origin
+  c.header('Access-Control-Allow-Origin', '*'); // Allow all origins for development
   c.header('Access-Control-Allow-Headers', 'Authorization, Content-Type');
   c.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
 
