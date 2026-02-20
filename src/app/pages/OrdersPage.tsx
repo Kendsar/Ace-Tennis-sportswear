@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import { ordersAPI } from '../services/api';
 import { toast } from 'sonner';
 import { Package, Clock, Truck, CheckCircle, XCircle } from 'lucide-react';
+import { Button } from '../components/ui/button';
 
 interface Order {
   id: string;
@@ -101,12 +102,13 @@ export function OrdersPage() {
           <div className="text-center py-12">
             <Package className="w-16 h-16 mx-auto text-gray-300 mb-4" />
             <p className="text-gray-500 uppercase tracking-wide mb-4">No orders yet</p>
-            <button
+            <Button
+              variant="secondary"
+              className="bg-black text-white hover:bg-gray-800 uppercase tracking-wide"
               onClick={() => navigate('/women')}
-              className="bg-black text-white px-6 py-3 uppercase tracking-wide text-sm hover:bg-gray-800 transition-colors"
             >
               Start Shopping
-            </button>
+            </Button>
           </div>
         ) : (
           <div className="space-y-4">
@@ -141,9 +143,9 @@ export function OrdersPage() {
                     <p className="text-lg font-bold">
                       ${parseFloat(order.total_amount.toString()).toFixed(2)}
                     </p>
-                    <button className="text-sm uppercase tracking-wide hover:underline">
+                    <Button variant="outline" className="text-sm uppercase tracking-wide hover:underline p-0 h-auto border-0">
                       View Details →
-                    </button>
+                    </Button>
                   </div>
                 </div>
               );
@@ -255,12 +257,13 @@ export function OrdersPage() {
                 </div>
 
                 {/* Close Button */}
-                <button
+                <Button
+                  variant="secondary"
+                  className="w-full bg-black text-white hover:bg-gray-800 uppercase tracking-wide"
                   onClick={() => setSelectedOrder(null)}
-                  className="w-full bg-black text-white py-3 uppercase tracking-wide hover:bg-gray-800 transition-colors"
                 >
                   Close
-                </button>
+                </Button>
               </div>
             </div>
           </div>

@@ -5,6 +5,7 @@ import { ProductQuickAdd } from '../components/ProductQuickAdd';
 import { Product } from '../context/CartContext';
 import { productsAPI } from '../services/api';
 import { toast } from 'sonner';
+import { Button } from '../components/ui/button';
 
 interface ProductListingPageProps {
   category: 'men' | 'women';
@@ -70,21 +71,21 @@ export function ProductListingPage({ category, title }: ProductListingPageProps)
 
       {/* Filter & View Controls */}
       <div className="px-4 md:px-8 pb-6 flex items-center justify-between border-b border-gray-200">
-        <button className="flex items-center gap-2 text-sm tracking-wider uppercase hover:opacity-60 transition-opacity">
+        <Button variant="outline" className="text-sm tracking-wider uppercase">
           <Filter className="w-4 h-4" />
           <span>Filter</span>
-        </button>
+        </Button>
 
-        <button
+        <Button
+          variant="outline"
           onClick={() => setGridView(gridView === '2col' ? '1col' : '2col')}
-          className="hover:opacity-60 transition-opacity"
         >
           {gridView === '2col' ? (
             <Grid2X2 className="w-5 h-5" />
           ) : (
             <List className="w-5 h-5" />
           )}
-        </button>
+        </Button>
       </div>
 
       {/* Product Grid */}
