@@ -150,10 +150,11 @@ export const productsAPI = {
   getAll: async () => {
     const { data, error } = await supabase
       .from("products")
-      .select("*");
+      .select("*")
+      .order("created_at", { ascending: false });
 
     if (error) throw error;
-    return data;
+    return { success: true, products: data || [] };
   },
 
   // Get products by category
@@ -161,10 +162,11 @@ export const productsAPI = {
     const { data, error } = await supabase
       .from("products")
       .select("*")
-      .eq("category", category);
+      .eq("category", category)
+      .order("created_at", { ascending: false });
 
     if (error) throw error;
-    return data;
+    return { success: true, products: data || [], category };
   },
 
   // Get product by ID
@@ -173,10 +175,10 @@ export const productsAPI = {
       .from("products")
       .select("*")
       .eq("id", id)
-      .single();
+      .maybeSingle();
 
     if (error) throw error;
-    return data;
+    return { success: true, product: data };
   },
 
   // Create product
@@ -188,7 +190,7 @@ export const productsAPI = {
       .single();
 
     if (error) throw error;
-    return data;
+    return { success: true, product: data };
   },
 
   // Update product
@@ -201,7 +203,7 @@ export const productsAPI = {
       .single();
 
     if (error) throw error;
-    return data;
+    return { success: true, product: data };
   },
 
   // Delete product
@@ -212,7 +214,7 @@ export const productsAPI = {
       .eq("id", id);
 
     if (error) throw error;
-    return true;
+    return { success: true };
   },
 };
 
@@ -226,12 +228,11 @@ export const ordersAPI = {
 
     if (!user) throw new Error("Not authenticated");
 
-    const { data, error } = await supabase
+    const { data: order, error: orderError } = await supabase
       .from("orders")
       .insert([
         {
           user_id: user.id,
-          items,
           total_amount: totalAmount,
           shipping_address: shippingAddress,
           status: "pending",
@@ -240,8 +241,31 @@ export const ordersAPI = {
       .select()
       .single();
 
-    if (error) throw error;
-    return data;
+    if (orderError) throw orderError;
+
+    // Create order items
+    const orderItems = items.map((item) => ({
+      order_id: order.id,
+      product_id: item.productId,
+      product_name: item.name,
+      product_image: item.image,
+      selected_color: item.selectedColor,
+      selected_size: item.selectedSize,
+      quantity: item.quantity,
+      price: item.price,
+    }));
+
+    const { error: itemsError } = await supabase
+      .from("order_items")
+      .insert(orderItems);
+
+    if (itemsError) {
+      // Rollback order
+      await supabase.from("orders").delete().eq("id", order.id);
+      throw itemsError;
+    }
+
+    return { success: true, order };
   },
 
   // Get current user orders
@@ -259,19 +283,27 @@ export const ordersAPI = {
       .order("created_at", { ascending: false });
 
     if (error) throw error;
-    return data;
+    return { success: true, orders: data || [] };
   },
 
   // Get order by ID
   getById: async (id: string) => {
-    const { data, error } = await supabase
+    const { data: order, error: orderError } = await supabase
       .from("orders")
       .select("*")
       .eq("id", id)
-      .single();
+      .maybeSingle();
 
-    if (error) throw error;
-    return data;
+    if (orderError) throw orderError;
+
+    const { data: items, error: itemsError } = await supabase
+      .from("order_items")
+      .select("*")
+      .eq("order_id", id);
+
+    if (itemsError) throw itemsError;
+
+    return { success: true, order: { ...order, items: items || [] } };
   },
 
   // Update order status (admin only)
@@ -284,7 +316,7 @@ export const ordersAPI = {
       .single();
 
     if (error) throw error;
-    return data;
+    return { success: true, order: data };
   },
 
   // Admin: get all orders
@@ -295,7 +327,7 @@ export const ordersAPI = {
       .order("created_at", { ascending: false });
 
     if (error) throw error;
-    return data;
+    return { success: true, orders: data || [] };
   },
 };
 
