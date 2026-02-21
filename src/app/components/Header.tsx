@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Menu, Search, User, ShoppingBag, X, LogOut } from 'lucide-react';
+import { Menu, Search, User, ShoppingBag, X, LogOut, ChevronDown, ChevronUp } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { useAuth } from '../context/AuthContext';
 import { CartDrawer } from './CartDrawer';
@@ -11,6 +11,11 @@ interface DrawerMenuProps {
 }
 
 function DrawerMenu({ isOpen, onClose }: DrawerMenuProps) {
+  const [expandedSections, setExpandedSections] = useState({
+    women: false,
+    men: false,
+  });
+
   // Prevent body scroll when drawer is open
   useEffect(() => {
     if (isOpen) {
@@ -22,6 +27,13 @@ function DrawerMenu({ isOpen, onClose }: DrawerMenuProps) {
       document.body.style.overflow = 'unset';
     };
   }, [isOpen]);
+
+  const toggleSection = (section: 'women' | 'men') => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
+  };
 
   return (
     <>
@@ -50,9 +62,23 @@ function DrawerMenu({ isOpen, onClose }: DrawerMenuProps) {
           </button>
 
           {/* Women's Section */}
-          <div className="mb-10">
-            <h2 className="text-2xl mb-4 tracking-wider font-normal">WOMEN</h2>
-            <nav className="space-y-3">
+          <div className="mb-10" style={{ marginBottom: '0' }}>
+            <button
+              onClick={() => toggleSection('women')}
+              className="flex items-center justify-between w-full text-left mb-4 hover:opacity-60 transition-opacity"
+            >
+              <h2 className="text-2xl tracking-wider font-normal">WOMEN</h2>
+              {expandedSections.women ? (
+                <ChevronUp className="w-5 h-5" />
+              ) : (
+                <ChevronDown className="w-5 h-5" />
+              )}
+            </button>
+            <nav
+              className={`space-y-3 overflow-hidden transition-all duration-300 ${
+                expandedSections.women ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+              }`}
+            >
               <Link
                 to="/women"
                 onClick={onClose}
@@ -135,8 +161,22 @@ function DrawerMenu({ isOpen, onClose }: DrawerMenuProps) {
 
           {/* Men's Section */}
           <div>
-            <h2 className="text-2xl mb-4 tracking-wider font-normal">MEN</h2>
-            <nav className="space-y-3">
+            <button
+              onClick={() => toggleSection('men')}
+              className="flex items-center justify-between w-full text-left mb-4 hover:opacity-60 transition-opacity"
+            >
+              <h2 className="text-2xl tracking-wider font-normal">MEN</h2>
+              {expandedSections.men ? (
+                <ChevronUp className="w-5 h-5" />
+              ) : (
+                <ChevronDown className="w-5 h-5" />
+              )}
+            </button>
+            <nav
+              className={`space-y-3 overflow-hidden transition-all duration-300 ${
+                expandedSections.men ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+              }`}
+            >
               <Link
                 to="/men"
                 onClick={onClose}
@@ -224,9 +264,9 @@ export function Header({ cartCount }: HeaderProps) {
   return (
     <>
       {/* Announcement Bar */}
-      <div className="bg-[#3a3d3a] text-white py-2.5 px-4 text-center">
+      <div className="bg-[#5ab1d1] text-white py-2.5 px-4 text-center">
         <p className="text-[10px] md:text-xs tracking-[0.2em] uppercase">
-          MOVE WITH POWER · ACE SPORTS FALL | WINTER IS HERE
+          Smash Hard · ACE Tennis Sportswear FW Collection
         </p>
       </div>
 
@@ -276,7 +316,7 @@ export function Header({ cartCount }: HeaderProps) {
                 <div className="absolute right-0 top-10 bg-white border border-gray-200 shadow-lg rounded-md w-48 py-2 z-50">
                   {user ? (
                     <>
-                      <div className="px-4 py-2 border-b border-gray-100">
+                      <div className="px-4 py-2 border-b border-gray-100" style={{overflowWrap: 'anywhere'}}>
                         <p className="text-xs text-gray-500 uppercase tracking-wide">
                           {user.email}
                         </p>

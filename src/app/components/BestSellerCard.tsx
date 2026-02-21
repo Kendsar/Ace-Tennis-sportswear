@@ -17,9 +17,9 @@ export function BestSellerCard({ product }: BestSellerCardProps) {
 
   return (
     <>
-      <div className="group bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+      <div className="group bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 h-full flex flex-col">
         {/* Product Image */}
-        <div className="relative aspect-[4/5] bg-gray-50 overflow-hidden rounded-t-lg">
+        <div className="relative aspect-[4/5] bg-gray-50 overflow-hidden rounded-t-lg flex-shrink-0">
           <img
             src={product.image}
             alt={product.name}
@@ -29,18 +29,18 @@ export function BestSellerCard({ product }: BestSellerCardProps) {
         </div>
 
         {/* Product Info */}
-        <div className="p-4 space-y-3">
-          <h3 className="text-sm font-medium tracking-wide uppercase text-gray-900 group-hover:text-gray-600 transition-colors">
+        <div className="p-3 sm:p-4 flex flex-col flex-grow space-y-2 sm:space-y-3">
+          <h3 className="text-xs sm:text-sm font-medium tracking-wide uppercase text-gray-900 group-hover:text-gray-600 transition-colors line-clamp-2 min-h-[2.5rem] sm:min-h-[3rem]">
             {product.name}
           </h3>
 
           {/* Star Rating */}
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 flex-shrink-0">
             <div className="flex">
               {[...Array(5)].map((_, i) => (
                 <Star
                   key={i}
-                  className={`w-4 h-4 ${
+                  className={`w-3 h-3 sm:w-4 sm:h-4 ${
                     i < Math.floor(rating)
                       ? 'fill-yellow-400 text-yellow-400'
                       : i < rating
@@ -56,20 +56,23 @@ export function BestSellerCard({ product }: BestSellerCardProps) {
           </div>
 
           {/* Price */}
-          <p className="text-lg font-semibold text-gray-900">
+          <p className="text-base sm:text-lg font-semibold text-gray-900 flex-shrink-0">
             {product.price.toFixed(3)} DT
           </p>
 
           {/* Add to Cart Button */}
-          <Button
-            variant="primary"
-            className="w-full"
-            onClick={() => setQuickAddOpen(true)}
-            aria-label={`Add ${product.name} to cart`}
-          >
-            <ShoppingBag className="w-4 h-4" />
-            Add to Cart
-          </Button>
+          <div className="mt-auto pt-2">
+            <Button
+              variant="primary"
+              className="w-full rounded-none relative overflow-hidden group text-sm sm:text-base"
+              onClick={() => setQuickAddOpen(true)}
+              aria-label={`Add ${product.name} to cart - Limited Stock`}
+            >
+              <span className="relative z-10">Add to Cart</span>
+              <span className="text-xs opacity-80 ml-1 hidden sm:inline">• Limited Stock</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out" />
+            </Button>
+          </div>
         </div>
       </div>
 

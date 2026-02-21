@@ -306,7 +306,7 @@ export function AdminDashboard() {
                   <img src={product.image} alt={product.name} className="w-20 h-20 object-cover" />
                   <div>
                     <h3 className="font-bold uppercase tracking-tight">{product.name}</h3>
-                    <p className="text-sm text-gray-600">${product.price.toFixed(3)}</p>
+                    <p className="text-sm text-gray-600">{product.price.toFixed(3)} DT</p>
                     <p className="text-xs text-gray-500 uppercase">{product.category}</p>
                     <p className="text-xs text-gray-500">
                       {product.in_stock ? 'In Stock' : 'Out of Stock'}

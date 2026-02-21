@@ -9,14 +9,14 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: "h-12 px-6 bg-[#22c55e] text-white hover:bg-[#16a34a] active:bg-[#15803d] shadow-sm hover:shadow-md",
+        primary: "h-14 px-8 bg-black text-white hover:bg-gray-900 active:bg-gray-800 shadow-lg hover:shadow-xl hover:shadow-black/30 transform hover:scale-[1.02] active:scale-[0.98] border-2 border-black/20",
         secondary: "h-12 px-6 bg-gray-100 text-gray-900 hover:bg-gray-200 active:bg-gray-300",
         outline: "h-12 px-6 border-2 border-gray-300 bg-transparent text-gray-700 hover:border-gray-400 hover:bg-gray-50 active:bg-gray-100",
       },
       size: {
         default: "h-12 px-6",
         sm: "h-10 px-4 text-xs",
-        lg: "h-14 px-8 text-base",
+        lg: "h-16 px-10 text-lg",
       },
     },
     defaultVariants: {

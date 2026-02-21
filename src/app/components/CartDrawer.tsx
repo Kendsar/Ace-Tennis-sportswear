@@ -94,7 +94,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                       <p className="text-xs text-gray-600 mb-2">
                         Size: {item.selectedSize}
                       </p>
-                      <p className="text-sm font-bold">${item.price.toFixed(2)}</p>
+                      <p className="text-sm font-bold">{item.price.toFixed(2)} DT</p>
                     </div>
                   </div>
 
@@ -151,7 +151,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
           <div className="px-6 py-4 border-t border-gray-200">
             <div className="flex justify-between items-center mb-4">
               <span className="uppercase tracking-wide text-sm">Subtotal</span>
-              <span className="text-xl font-bold">${cartTotal.toFixed(2)}</span>
+              <span className="text-xl font-bold">{cartTotal.toFixed(2)} DT</span>
             </div>
             <Button
               onClick={handleCheckout}

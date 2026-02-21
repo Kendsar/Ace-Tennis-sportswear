@@ -104,10 +104,11 @@ export function OrdersPage() {
             <p className="text-gray-500 uppercase tracking-wide mb-4">No orders yet</p>
             <Button
               variant="secondary"
-              className="bg-black text-white hover:bg-gray-800 uppercase tracking-wide"
+              className="bg-black text-white hover:bg-gray-800 uppercase tracking-wide relative overflow-hidden group"
               onClick={() => navigate('/women')}
             >
               Start Shopping
+              <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out" />
             </Button>
           </div>
         ) : (
@@ -141,7 +142,7 @@ export function OrdersPage() {
 
                   <div className="flex items-center justify-between">
                     <p className="text-lg font-bold">
-                      ${parseFloat(order.total_amount.toString()).toFixed(2)}
+                      {parseFloat(order.total_amount.toString()).toFixed(2)} DT
                     </p>
                     <Button variant="outline" className="text-sm uppercase tracking-wide hover:underline p-0 h-auto border-0">
                       View Details →
@@ -237,7 +238,7 @@ export function OrdersPage() {
                           </div>
                           <div className="text-right">
                             <p className="font-bold">
-                              ${parseFloat(item.price).toFixed(2)}
+                              {parseFloat(item.price).toFixed(2)} DT
                             </p>
                           </div>
                         </div>
@@ -251,7 +252,7 @@ export function OrdersPage() {
                   <div className="flex justify-between items-center">
                     <span className="text-lg uppercase tracking-wide">Total</span>
                     <span className="text-2xl font-bold">
-                      ${parseFloat(selectedOrder.total_amount.toString()).toFixed(2)}
+                      {parseFloat(selectedOrder.total_amount.toString()).toFixed(2)} DT
                     </span>
                   </div>
                 </div>

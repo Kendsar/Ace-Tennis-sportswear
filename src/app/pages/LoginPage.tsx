@@ -80,9 +80,12 @@ export function LoginPage() {
           <Button
             type="submit"
             disabled={loading}
-            className="w-full uppercase tracking-wide"
+            className="w-full relative overflow-hidden group"
           >
-            {loading ? 'Signing in...' : 'Sign In'}
+            {loading ? 'Signing in...' : 'Sign In Now'}
+            {!loading && (
+              <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out" />
+            )}
           </Button>
         </form>
 

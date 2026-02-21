@@ -1,9 +1,8 @@
-import { Link } from 'react-router';
 import { Button } from '../components/ui/button';
 import { BestSellers } from '../components/BestSellers';
-import { ArrowRight } from 'lucide-react';
 import { TrustStrip } from '../components/TrustStrip';
 import { TestimonialsSection } from '../components/TestimonialsSection';
+import tennisPlayerImage from '../../assets/f-tennis-player-posing-indoor-tennis-court.jpg';
 
 export function HomePage() {
   return (
@@ -26,117 +25,56 @@ export function HomePage() {
           animation: fadeIn 1s ease-out both;
         }
       `}</style>
-      {/* Hero Section */}
-      <div className="relative h-[85vh] md:h-[90vh] bg-gray-100">
+      <div className="relative h-[85vh] md:h-[90vh] lg:h-[95vh] bg-gray-900">
         <img
-          src="https://images.unsplash.com/photo-1566226677912-c333af37181f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1400"
-          alt="Tennis Campaign"
+          src={tennisPlayerImage}
+          alt="Professional tennis player posing on indoor tennis court"
           className="w-full h-full object-cover"
         />
+        {/* Dark Overlay for Text Readability */}
+        <div className="absolute inset-0 bg-black/40" />
 
         {/* Hero Text Overlay */}
-        <div className="absolute inset-0 flex flex-col justify-center px-6 md:px-12 lg:px-20">
+        <div className="absolute inset-0 flex flex-col justify-center px-4 md:px-8 lg:px-12 xl:px-20">
           <div className="max-w-7xl hero-content">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter leading-tight mb-4 text-black">
-              Up to 40% Off Tennis Essentials
+            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tighter leading-tight mb-4 md:mb-6 text-white drop-shadow-lg">
+              Play Hard,<br className="hidden sm:block" />
+              <span className="text-[#82C5F4]"> Rule the Court</span><br className="hidden md:block" />
             </h1>
-            <p className="text-lg md:text-xl lg:text-2xl mb-6 md:mb-8 text-black/80">
-              Performance gear designed to dominate the court.
+            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl mb-6 md:mb-8 lg:mb-12 text-white/90 drop-shadow-md font-light leading-relaxed max-w-2xl lg:max-w-3xl xl:max-w-4xl">
+              Dominate the court with confidence and conscience.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 md:gap-6">
               <Button
                 variant="primary"
                 size="lg"
-                aria-label="Shop the current sale"
+                className="rounded-none relative overflow-hidden group"
+                aria-label="Shop our high-performance tennis wear today"
               >
-                Shop Sale
+                <span className="relative z-10">Shop Today</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out" />
               </Button>
               <Button
                 variant="outline"
                 size="lg"
-                className="border-black text-black hover:bg-black hover:text-white"
-                aria-label="Explore our full collection"
+                className="rounded-none border-2 border-white text-white hover:bg-white hover:text-gray-900 font-semibold text-base md:text-lg px-6 md:px-8 py-3 md:py-4 h-12 md:h-16 backdrop-blur-sm bg-white/10 w-full sm:w-auto"
+                aria-label="Learn more about our eco-friendly collection"
               >
-                Explore Collection
+                Learn More
               </Button>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Best Sellers Section */}
+      {/* USP Section - Trust Indicators */}
+      <TrustStrip />
+
+      {/* Product Grid Section */}
       <BestSellers />
 
       {/* Testimonials Section */}
       <TestimonialsSection />
-
-      {/* Featured Categories */}
-      <div className="max-w-7xl mx-auto px-4 py-16 md:py-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-          {/* Women's Category */}
-          <Link to="/women" className="group block">
-            <div className="relative aspect-[3/4] bg-gray-100 mb-4 overflow-hidden rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]">
-              <img
-                src="https://images.unsplash.com/photo-1684225358843-54b1132537b6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800"
-                alt="Women's Collection"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </div>
-            <div className="text-center space-y-2">
-              <h2 className="text-3xl md:text-4xl tracking-wider uppercase text-gray-900 group-hover:text-gray-600 transition-colors">
-                WOMEN
-              </h2>
-              <p className="text-sm md:text-base text-gray-600 group-hover:text-gray-500 transition-colors">
-                Shop performance wear
-              </p>
-              <div className="flex items-center justify-center gap-2 text-gray-500 group-hover:text-gray-700 transition-colors">
-                <span className="text-xs md:text-sm font-medium">Explore Collection</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
-              </div>
-            </div>
-          </Link>
-
-          {/* Men's Category */}
-          <Link to="/men" className="group block">
-            <div className="relative aspect-[3/4] bg-gray-100 mb-4 overflow-hidden rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]">
-              <img
-                src="https://images.unsplash.com/photo-1663712730198-f8b201d20f60?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800"
-                alt="Men's Collection"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </div>
-            <div className="text-center space-y-2">
-              <h2 className="text-3xl md:text-4xl tracking-wider uppercase text-gray-900 group-hover:text-gray-600 transition-colors">
-                MEN
-              </h2>
-              <p className="text-sm md:text-base text-gray-600 group-hover:text-gray-500 transition-colors">
-                Shop performance wear
-              </p>
-              <div className="flex items-center justify-center gap-2 text-gray-500 group-hover:text-gray-700 transition-colors">
-                <span className="text-xs md:text-sm font-medium">Explore Collection</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
-              </div>
-            </div>
-          </Link>
-        </div>
-      </div>
-
-      {/* Brand Statement */}
-      <div className="bg-gray-50 py-20 md:py-32 px-6 text-center">
-        <h2 className="text-4xl md:text-6xl lg:text-7xl tracking-wider uppercase mb-6">
-          ACE TENNIS
-        </h2>
-        <p className="text-sm md:text-base tracking-[0.2em] uppercase max-w-2xl mx-auto text-gray-600">
-          Performance meets style on and off the court
-        </p>
-      </div>
-
-      {/* Trust Strip */}
-      <TrustStrip />
     </div>
   );
 }

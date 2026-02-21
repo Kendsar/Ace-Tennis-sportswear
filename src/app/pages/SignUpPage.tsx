@@ -68,7 +68,7 @@ export function SignUpPage() {
               type="text"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              placeholder="John Doe"
+              placeholder="Meow Moew"
               className="w-full"
             />
           </div>
@@ -124,9 +124,12 @@ export function SignUpPage() {
           <Button
             type="submit"
             disabled={loading}
-            className="w-full uppercase tracking-wide"
+            className="w-full relative overflow-hidden group"
           >
-            {loading ? 'Creating account...' : 'Create Account'}
+            {loading ? 'Creating account...' : 'Join Today'}
+            {!loading && (
+              <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out" />
+            )}
           </Button>
         </form>
 
