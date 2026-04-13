@@ -1,4 +1,4 @@
-# Ace Tennis Sportswear Store - Complete Backend Implementation Summary
+# Vamos Tennis Sportswear Store - Complete Backend Implementation Summary
 
 ## 🎉 Project Status: COMPLETE
 

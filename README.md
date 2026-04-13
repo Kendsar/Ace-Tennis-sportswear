@@ -1,7 +1,7 @@
 
-  # Ace Tennis Sportswear Website Design
+  # Vamos Tennis Sportswear Website Design
 
-  This is a code bundle for Ace Tennis Sportswear Website Design. The original project is available at https://www.figma.com/design/NEZ0sjQeEkVLXTQWEcw1LG/Ace-Tennis-Sportswear-Website-Design.
+  This is a code bundle for Vamos Tennis Sportswear Website Design. The original project is available at https://www.figma.com/design/NEZ0sjQeEkVLXTQWEcw1LG/Ace-Tennis-Sportswear-Website-Design.
 
   ## Running the code
 

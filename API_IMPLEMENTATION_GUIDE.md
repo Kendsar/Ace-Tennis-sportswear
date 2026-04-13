@@ -1,4 +1,4 @@
-# Ace Tennis Sportswear Store - API Implementation Guide
+# Vamos Tennis Sportswear Store - API Implementation Guide
 
 ## Overview
 The backend has been fully refactored to use **Supabase client directly** instead of external API layers. This provides:
@@ -103,7 +103,7 @@ import { ordersAPI, OrderItem } from '../services/api';
 const items: OrderItem[] = [
   {
     productId: '123',
-    name: 'ACE TENNIS DRESS',
+    name: 'Vamos Tennis DRESS',
     image: 'url',
     selectedColor: '#ffffff',
     selectedSize: 'M',

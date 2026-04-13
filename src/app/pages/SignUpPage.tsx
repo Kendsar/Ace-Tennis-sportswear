@@ -17,7 +17,7 @@ export function SignUpPage() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    
+
     if (!email || !password || !confirmPassword) {
       toast.error('Please fill in all required fields');
       return;
@@ -51,7 +51,7 @@ export function SignUpPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-10">
           <h1 className="text-3xl font-bold tracking-tight uppercase mb-2">
-            ACE TENNIS
+            Vamos Tennis
           </h1>
           <p className="text-sm text-gray-600 uppercase tracking-wide">
             Create your account

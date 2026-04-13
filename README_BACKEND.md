@@ -1,4 +1,4 @@
-# Ace Tennis Sportswear Store - Backend Integration
+# Vamos Tennis Sportswear Store - Backend Integration
 
 ## 🎯 Quick Start Guide
 

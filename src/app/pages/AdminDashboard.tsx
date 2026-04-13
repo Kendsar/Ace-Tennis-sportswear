@@ -27,7 +27,7 @@ export function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
-  
+
   // Form state
   const [formData, setFormData] = useState({
     name: '',
@@ -118,7 +118,7 @@ export function AdminDashboard() {
         await productsAPI.create(productData);
         toast.success('Product created successfully');
       }
-      
+
       setShowForm(false);
       setEditingProduct(null);
       resetForm();
@@ -168,7 +168,7 @@ export function AdminDashboard() {
               Manage Products
             </p>
           </div>
-          
+
           {!showForm && (
             <Button onClick={() => setShowForm(true)} className="uppercase">
               <Plus className="w-4 h-4 mr-2" />

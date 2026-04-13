@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router';
 import { useAuth } from '../context/AuthContext';
 import { Button } from '../components/ui/button';
@@ -10,12 +10,19 @@ export function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const { signIn } = useAuth();
+  const { signIn, user } = useAuth();
   const navigate = useNavigate();
+
+  // Redirect to home when user becomes authenticated
+  useEffect(() => {
+    if (user) {
+      navigate('/', { replace: true });
+    }
+  }, [user, navigate]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    
+
     if (!email || !password) {
       toast.error('Please fill in all fields');
       return;
@@ -25,7 +32,7 @@ export function LoginPage() {
     try {
       await signIn(email, password);
       toast.success('Successfully signed in!');
-      navigate('/');
+      // Navigation handled by the useEffect above watching `user`
     } catch (error: any) {
       console.error('Login error:', error);
       toast.error(error.message || 'Failed to sign in');
@@ -39,7 +46,7 @@ export function LoginPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-10">
           <h1 className="text-3xl font-bold tracking-tight uppercase mb-2">
-            ACE TENNIS
+            Vamos Tennis
           </h1>
           <p className="text-sm text-gray-600 uppercase tracking-wide">
             Sign in to your account

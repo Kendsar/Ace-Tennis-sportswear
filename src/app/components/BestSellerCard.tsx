@@ -64,7 +64,7 @@ export function BestSellerCard({ product }: BestSellerCardProps) {
           <div className="mt-auto pt-2">
             <Button
               variant="primary"
-              className="w-full rounded-none relative overflow-hidden group text-sm sm:text-base"
+              className="w-full rounded-full relative overflow-hidden group text-sm sm:text-base"
               onClick={() => setQuickAddOpen(true)}
               aria-label={`Add ${product.name} to cart - Limited Stock`}
             >

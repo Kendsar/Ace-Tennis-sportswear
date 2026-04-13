@@ -308,7 +308,7 @@ await ordersAPI.getAllOrders() // Admin only
 
 ## Version
 
-- **Project:** Ace Tennis Sportswear Store
+- **Project:** Vamos Tennis Sportswear Store
 - **Refactor Date:** 2024
 - **Status:** Production Ready ✅
 - **Build:** Passing ✅

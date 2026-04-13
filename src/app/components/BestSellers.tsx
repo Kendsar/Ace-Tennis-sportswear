@@ -5,8 +5,8 @@ import { products } from '../data/products';
 const bestSellers = [
   products.find(p => p.id === 'w6')!, // COURT COLLECTION SET - 120 DT
   products.find(p => p.id === 'm6')!, // PRO PACK COMBO - 99 DT
-  products.find(p => p.id === 'w1')!, // ACE TENNIS DRESS - 89 DT
-  products.find(p => p.id === 'm4')!, // ACE TENNIS PANTS - 79 DT
+  products.find(p => p.id === 'w1')!, // Vamos Tennis DRESS - 89 DT
+  products.find(p => p.id === 'm4')!, // Vamos Tennis PANTS - 79 DT
   products.find(p => p.id === 'w5')!, // TENNIS SKIRT PRO - 75 DT
   products.find(p => p.id === 'm3')!, // PERFORMANCE POLO - 69 DT
 ];

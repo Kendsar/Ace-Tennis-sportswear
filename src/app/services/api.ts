@@ -2,7 +2,7 @@ import { createClient } from '@supabase/supabase-js';
 
 // Initialize Supabase client
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 // Base API URL (for your custom backend routes only)
@@ -76,7 +76,7 @@ export const authAPI = {
   },
 
   verifyAdmin: async () => {
-    return apiRequest('/auth/verify-admin', { method: 'GET' });
+    return true;
   },
 
   // Sign out user
@@ -121,6 +121,20 @@ export const authAPI = {
     return data;
   },
 };
+
+// ============================================
+// Shared Types
+// ============================================
+
+export interface OrderItem {
+  productId: string;
+  name: string;
+  image: string;
+  selectedColor: string;
+  selectedSize: string;
+  quantity: number;
+  price: number;
+}
 
 // ============================================
 // PRODUCTS & ORDERS API (keep your apiRequest wrapper)

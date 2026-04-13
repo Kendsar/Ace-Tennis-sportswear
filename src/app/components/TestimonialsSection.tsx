@@ -14,7 +14,7 @@ const testimonials = [
     name: 'Marcus Rodriguez',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=100',
     rating: 5,
-    testimonial: 'ACE Tennis gear has transformed my game. The quality materials and design make me feel like a professional player every time I step on the court.'
+    testimonial: 'Vamos Tennis gear has transformed my game. The quality materials and design make me feel like a professional player every time I step on the court.'
   },
   {
     id: 3,
@@ -35,7 +35,7 @@ export function TestimonialsSection() {
             Trusted by Players
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Hear from tennis players who trust ACE for their performance gear
+            Hear from tennis players who trust VAMOS for their performance gear
           </p>
         </div>
 

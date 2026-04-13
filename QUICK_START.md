@@ -1,4 +1,4 @@
-# Quick Start Guide - Ace Tennis Sportswear
+# Quick Start Guide - Vamos Tennis Sportswear
 
 ## Setup (Already Complete)
 
@@ -315,4 +315,4 @@ For database setup details, see: `DATABASE_SETUP.md`
 ✅ Build passing
 ✅ Ready for production
 
-Enjoy your Ace Tennis Sportswear Store!
+Enjoy your Vamos Tennis Sportswear Store!

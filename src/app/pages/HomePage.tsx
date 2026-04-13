@@ -67,14 +67,14 @@ export function HomePage() {
         </div>
       </div>
 
-      {/* USP Section - Trust Indicators */}
-      <TrustStrip />
-
       {/* Product Grid Section */}
       <BestSellers />
 
+      {/* USP Section - Trust Indicators */}
+      <TrustStrip />
+
       {/* Testimonials Section */}
-      <TestimonialsSection />
+      {/* <TestimonialsSection /> */}
     </div>
   );
 }

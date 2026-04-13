@@ -47,7 +47,7 @@ function DrawerMenu({ isOpen, onClose }: DrawerMenuProps) {
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 left-0 h-full w-80 max-w-[85vw] bg-white z-50 transform transition-transform duration-300 ease-in-out overflow-y-auto ${
+        className={`fixed top-0 left-0 h-full w-full sm:w-80 bg-white z-50 transform transition-transform duration-300 ease-in-out overflow-y-auto ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
@@ -55,17 +55,17 @@ function DrawerMenu({ isOpen, onClose }: DrawerMenuProps) {
           {/* Close Button */}
           <button
             onClick={onClose}
-            className="mb-8 hover:opacity-60 transition-opacity"
+            className="mb-4 hover:opacity-60 transition-opacity"
             aria-label="Close menu"
           >
             <X className="w-6 h-6" />
           </button>
 
           {/* Women's Section */}
-          <div className="mb-10" style={{ marginBottom: '0' }}>
+          <div>
             <button
               onClick={() => toggleSection('women')}
-              className="flex items-center justify-between w-full text-left mb-4 hover:opacity-60 transition-opacity"
+              className="mt-2 mb-2 flex items-center justify-between w-full text-left mb-2 hover:opacity-60 transition-opacity"
             >
               <h2 className="text-2xl tracking-wider font-normal">WOMEN</h2>
               {expandedSections.women ? (
@@ -75,9 +75,8 @@ function DrawerMenu({ isOpen, onClose }: DrawerMenuProps) {
               )}
             </button>
             <nav
-              className={`space-y-3 overflow-hidden transition-all duration-300 ${
-                expandedSections.women ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-              }`}
+              className={`pl-2 pt-2 pb-2 space-y-4 overflow-hidden transition-all duration-300 ${expandedSections.women ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                }`}
             >
               <Link
                 to="/women"
@@ -85,13 +84,6 @@ function DrawerMenu({ isOpen, onClose }: DrawerMenuProps) {
                 className="block text-sm tracking-wider hover:opacity-60 transition-opacity"
               >
                 ALL PRODUCTS
-              </Link>
-              <Link
-                to="/women"
-                onClick={onClose}
-                className="block text-sm tracking-wider hover:opacity-60 transition-opacity"
-              >
-                NEW COLLECTION
               </Link>
               <Link
                 to="/women"
@@ -128,34 +120,6 @@ function DrawerMenu({ isOpen, onClose }: DrawerMenuProps) {
               >
                 TANK TOP
               </Link>
-              <Link
-                to="/women"
-                onClick={onClose}
-                className="block text-sm tracking-wider hover:opacity-60 transition-opacity"
-              >
-                LONG SLEEVE
-              </Link>
-              <Link
-                to="/women"
-                onClick={onClose}
-                className="block text-sm tracking-wider hover:opacity-60 transition-opacity"
-              >
-                LEGGINGS
-              </Link>
-              <Link
-                to="/women"
-                onClick={onClose}
-                className="block text-sm tracking-wider hover:opacity-60 transition-opacity"
-              >
-                PANTS
-              </Link>
-              <Link
-                to="/women"
-                onClick={onClose}
-                className="block text-sm tracking-wider hover:opacity-60 transition-opacity"
-              >
-                SWIMSUITS
-              </Link>
             </nav>
           </div>
 
@@ -163,7 +127,7 @@ function DrawerMenu({ isOpen, onClose }: DrawerMenuProps) {
           <div>
             <button
               onClick={() => toggleSection('men')}
-              className="flex items-center justify-between w-full text-left mb-4 hover:opacity-60 transition-opacity"
+              className="mt-2 mb-2 flex items-center justify-between w-full text-left hover:opacity-60 transition-opacity"
             >
               <h2 className="text-2xl tracking-wider font-normal">MEN</h2>
               {expandedSections.men ? (
@@ -173,9 +137,8 @@ function DrawerMenu({ isOpen, onClose }: DrawerMenuProps) {
               )}
             </button>
             <nav
-              className={`space-y-3 overflow-hidden transition-all duration-300 ${
-                expandedSections.men ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-              }`}
+              className={`pl-2 pt-2 pb-2 space-y-4 overflow-hidden transition-all duration-300 ${expandedSections.men ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                }`}
             >
               <Link
                 to="/men"
@@ -183,13 +146,6 @@ function DrawerMenu({ isOpen, onClose }: DrawerMenuProps) {
                 className="block text-sm tracking-wider hover:opacity-60 transition-opacity"
               >
                 ALL PRODUCTS
-              </Link>
-              <Link
-                to="/men"
-                onClick={onClose}
-                className="block text-sm tracking-wider hover:opacity-60 transition-opacity"
-              >
-                PANTS
               </Link>
               <Link
                 to="/men"
@@ -266,15 +222,14 @@ export function Header({ cartCount }: HeaderProps) {
       {/* Announcement Bar */}
       <div className="bg-[#5ab1d1] text-white py-2.5 px-4 text-center">
         <p className="text-[10px] md:text-xs tracking-[0.2em] uppercase">
-          Smash Hard · ACE Tennis Sportswear FW Collection
+          Smash Hard · Vamos Tennis Sportswear FW Collection
         </p>
       </div>
 
       {/* Main Header */}
       <header
-        className={`bg-white border-b border-gray-100 sticky top-0 z-30 transition-shadow duration-300 ${
-          isScrolled ? 'shadow-sm' : ''
-        }`}
+        className={`bg-white border-b border-gray-100 sticky top-0 z-30 transition-shadow duration-300 ${isScrolled ? 'shadow-sm' : ''
+          }`}
       >
         <div className="flex items-center justify-between px-4 md:px-6 py-4 md:py-5">
           {/* Left: Menu + Search */}
@@ -296,8 +251,8 @@ export function Header({ cartCount }: HeaderProps) {
 
           {/* Center: Logo */}
           <Link to="/" className="flex flex-col items-center group">
-            <span className="text-[10px] tracking-[0.2em] mt-1 group-hover:opacity-60 transition-opacity">
-              ACE SPORT
+            <span className="text-[18px] tracking-[0.2em] group-hover:opacity-60 transition-opacity">
+              VAMOS
             </span>
           </Link>
 
@@ -316,7 +271,7 @@ export function Header({ cartCount }: HeaderProps) {
                 <div className="absolute right-0 top-10 bg-white border border-gray-200 shadow-lg rounded-md w-48 py-2 z-50">
                   {user ? (
                     <>
-                      <div className="px-4 py-2 border-b border-gray-100" style={{overflowWrap: 'anywhere'}}>
+                      <div className="px-4 py-2 border-b border-gray-100" style={{ overflowWrap: 'anywhere' }}>
                         <p className="text-xs text-gray-500 uppercase tracking-wide">
                           {user.email}
                         </p>
@@ -385,7 +340,7 @@ export function Header({ cartCount }: HeaderProps) {
 
       {/* Drawer Menu */}
       <DrawerMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
-      
+
       {/* Cart Drawer */}
       <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </>

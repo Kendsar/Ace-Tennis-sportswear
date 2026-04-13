@@ -1,7 +1,7 @@
-# Ace Tennis Sportswear Store - Database Setup Guide
+# Vamos Tennis Sportswear Store - Database Setup Guide
 
 ## Overview
-This guide will help you set up the complete backend for the Ace Tennis Sportswear e-commerce store using Supabase.
+This guide will help you set up the complete backend for the Vamos Tennis Sportswear e-commerce store using Supabase.
 
 ## Prerequisites
 - Supabase project connected to Figma Make
